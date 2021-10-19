@@ -1,0 +1,70 @@
+const employees = [
+        { id: 1, name: 'arjun', email: 'arjun@gmail', gender: 'male', department: 'tech' },
+        { id: 2, name: 'sruthi', email: 'sruthi@gmail', gender: 'female', department: 'tech' },
+        { id: 3, name: 'deepa', email: 'deepa@gmail', gender: 'female', department: 'hr' },
+        { id: 4, name: 'jobin', email: 'jobin@gmail', gender: 'male', department: 'facility' },
+    ]
+
+    const maleEmployees = employees.filter(function (ele) {
+        return ele.gender === 'male'
+    })
+
+    const femaleEmployees = employees.filter(function (ele) {
+        return ele.gender === 'female'
+    })
+
+    const techEmployees = employees.filter(function(ele){ 
+        return ele.department === 'tech'
+    })
+
+    // Component - Function Component
+    // reusable 
+    // encapsulation
+    // regular javascript function, takes an input called props, returns react ele (jsx) representing what needs to appear on the UI
+    function EmployeesTable(props){ 
+        return (
+           <table border="1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> name </th>
+                            <th> email </th>
+                            <th> department </th>
+                            <th> gender </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.data.map(function (emp) {
+                            return (
+                                <tr>
+                                    <td> {emp.id} </td>
+                                    <td> {emp.name} </td>
+                                    <td> {emp.email}</td>
+                                    <td> {emp.department} </td>
+                                    <td> {emp.gender} </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+            </table>
+        )
+    }
+
+    const ele = (
+        <div>
+            <h1> Listing employees - { employees.length } </h1> 
+            {EmployeesTable({ data: employees}) }
+
+            <h1> Listing all male employees - { maleEmployees.length } </h1> 
+            { EmployeesTable({ data: maleEmployees })}
+
+            <h1> Listing all female employees - {femaleEmployees.length} </h1>
+            {EmployeesTable({ data: femaleEmployees })}
+
+            <h1> Listing all tech employees - {techEmployees.length} </h1>
+            {EmployeesTable({ data: techEmployees })}
+
+        </div> 
+    )
+
+    ReactDOM.render(ele, document.getElementById('root'))

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+    class Counter extends React.Component{
+        constructor(){
+            super()
+            this.state={
+                count : 0
+            }
+
+        }
+        handleUp = ()=>{
+            this.setState((prev)=>{
+                return { count : prev.count + 1}
+            })
+
+        }
+        handleDown =()=>{
+            this.setState((prev)=>{
+                return { count : prev.count - 1}
+            })
+        }
+        handleReset = ()=>{
+            this.setState({count :0})
+        }
+        render()
+        {
+            return(
+                <div>
+                {this.state.count}
+                <Button name='+' click={this.handleUp}/>
+                <Button name='-' click={this.handleDown}/>
+                <Button name='reset' click={this.handleReset}/>
+                <EmployeeForm/>
+                </div>
+            )
+        }
+    }
+    function Button(props){
+        return(
+            <div>
+                <button onClick={props.click}>{props.name}</button>
+            
+
+            </div>
+        )
+    }
+    class EmployeeForm extends React.Component{
+        constructor()
+        {
+            super()
+            this.state = {
+                name:'',
+                email:'',
+                gender:''
+            }
+        }
+        handleNameChange = (e) =>{
+            const name = e.target.value
+            this.setState({name})
+        }
+        handleEmailChange = (e) =>{
+            const email = e.target.value
+            this.setState({email})
+        }
+        handleGenderChnage = (gender) =>{
+            this.setState({gender})
+        }
+        handleSubmit = () =>{
+            e.preventDefault()
+        }
+        render(){
+            return(
+                <div>
+                <h1>add Employee</h1>
+                <form onSubmit={this.handleSubmit}>
+                <label>name </label>
+                <input
+                type="text"
+                value={this.state.name}
+                onChange={this.handleNameChange}/>
+                <br/>
+                <label>email </label>
+                sw<input
+                type="text"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+                /><br/>
+                <input
+                type='radio'
+                name='gender'
+                checked={this.state.gender =="male"}
+                onChange={()=>{this.handleGenderChnage('male')}}
+                />male
+                <input 
+                type='radio'
+                name='gender'
+                checked={this.state.gender =='female'}
+                onChange={()=>{this.handleGenderChnage('female')}}
+                />female    
+                </form>
+                </div>
+            )
+        }
+    }
+
+      ReactDOM.render(<Counter/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

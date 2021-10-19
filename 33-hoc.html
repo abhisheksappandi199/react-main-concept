@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+      
+      function Student(props)
+      {
+          return (
+              <h1>student studies @ {props.academy}</h1>
+          )
+      }
+      function Trainer(props)
+      {
+          return (
+              <h1>Trainer studies @ {props.academy}</h1>
+          )
+      }
+
+      //higher oreder component - functions
+      // it takes a component as a argument and / or returns a component
+      function withAcademy(WrappedComponent){
+          //logic , determine the type of user on the system
+          const academy = Math.round(Math.random() * 100) % 2 == 0 ? 'DCT' : 'IIT'
+          return () => {
+              return <WrappedComponent academy={academy}/>
+          }
+      }
+
+      const EnhancedComponentStudent = withAcademy(Student)
+      ReactDOM.render(<EnhancedComponentStudent/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

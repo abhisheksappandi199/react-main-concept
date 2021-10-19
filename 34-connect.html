@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+
+        // redux store - state 
+        const state = {
+            count: 0
+        }
+
+        // redux store - dispatch
+        const display = () => {
+            alert('hi there')
+        }
+
+        function connect(callback) {
+            const result = callback(state)
+            return (WrappedComponent) => {
+                return () => { // function component 
+                    return <WrappedComponent {...result}  display={display} />
+                }
+            }
+        }
+
+        function Counter(props){
+            return (
+                <div>
+                    <h1>Counter - { props.count } </h1>
+                    <button onClick={props.display}> click me </button>
+                </div>
+            )
+        }
+
+        const mapStateToProps = (state) => {
+            return {
+                count: state.count
+            }
+        }
+
+        const EnhancedComponent = connect(mapStateToProps)(Counter)
+
+        ReactDOM.render(<EnhancedComponent />, rootHandle)
+
+    </script>
+
+
+</body>
+</html>

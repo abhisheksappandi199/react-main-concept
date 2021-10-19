@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+     class Random extends React.Component{
+      constructor()
+      {
+          super()
+          this.state  ={
+              arr :[]
+          }
+      }
+     
+      Genrandom = () =>{
+        const num =  Math.round(Math.random() * 100)
+        //console.log(num);   
+        this.setState((prevState) => {
+            return {
+                arr : prevState.arr.concat(num)
+            }
+        })
+      }
+      render()
+      {
+          return(
+              <div>
+             
+               <ul>
+               {
+                   this.state.arr.map(e => <li>{e}</li>)
+               }
+               </ul>
+               <button onClick={this.Genrandom}>generate</button>
+              
+              </div>
+          )
+      }
+     }
+    ReactDOM.render(<Random/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

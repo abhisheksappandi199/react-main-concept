@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+     class TaskList extends React.Component{   
+         constructor()
+         {
+             super()
+             this.state={
+                tasks: [
+                { id: 1, title: 'db backup', status: false ,completedDate:''},
+                { id: 2, title: 'client call', status: true ,completedDate:'' },
+                { id: 3, title: 'ux design', status: false  ,completedDate:''},
+                { id: 4, title: 'client call', status: false  ,completedDate:''},
+            ],
+            id:'',
+            title:'',
+            status:false,
+            completedDate:''
+             }
+         }  
+         handleChange =(e) =>{
+             this.setState({[e.target.name] : e.target.value})
+         }
+         handleStatusChange = (e) =>{
+           const status = e.target.checked
+           this.setState({status})
+         }
+         
+         handleSubmit =(e)=>{
+             e.preventDefault()
+             const formDetail ={
+                 id :parseInt(this.state.id),
+                 title:this.state.title,
+                 status:this.state.status,
+                 completedDate:this.state.completedDate
+             }
+             this.setState((prev)=>{
+                 return {
+                     tasks : prev.tasks.concat(formDetail),
+                     id:'',
+                     title:'',
+                     status:false,
+                    completedDate:''
+                 }
+             })   
+         }
+         handleLog =(id)=>{
+             const bool = confirm("are you sure....!!")
+             if(bool)
+             {
+                this.setState((prev)=>{
+                 return {
+                     tasks : prev.tasks.filter(e => e.id != id)
+                 }
+             })
+             }
+         }
+         handleShow = (emp) =>{
+             alert(`the id is ${emp.id}`)
+         }
+        render()
+         {   
+
+             return(
+                <div>
+                    <h1>the Length - {this.state.tasks.length}</h1>
+                    <table border="1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> title </th>
+                            <th> status </th>
+                            <th> completedDate</th>
+                            <th>action</th>
+                            <th>show</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.tasks.map(emp => {
+                            return (
+                                <tr key={emp.id}>
+                                    <td> {emp.id} </td>
+                                    <td> {emp.title} </td>
+                                    <td> {emp.status ? "completed" : "ongoing"}</td>
+                                    <td> {emp.status == "" ? '-' : emp.completedDate}</td>
+                                    <td><button onClick={()=>{this.handleLog(emp.id)}}>delete</button></td>
+                                    <td><button onClick={()=>{this.handleShow(emp)}}>show</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+            </table>
+            <h1>Add Tasks</h1>
+            <form onSubmit={this.handleSubmit}>
+            id <input 
+            type='text'
+            name='id'
+            value={this.state.id}
+            onChange={this.handleChange}
+            /><br/>
+            title <input 
+            type='text'
+            name='title'
+            value={this.state.title}
+            onChange={this.handleChange}
+            /><br/>
+            status <input 
+            type='checkbox'
+            checked={this.state.status}
+            onChange={this.handleStatusChange}
+            /><br/>
+            {this.state.status && (<div>
+            date 
+            <input 
+            type='date'
+            name='completedDate'
+            value={this.state.completedDate}
+            onChange={this.handleChange}
+            />
+            </div>)}
+            <br/>
+            <input
+            type='submit'
+            /> 
+            </form>
+            </div>
+             )
+         }
+     }
+      ReactDOM.render(<TaskList/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

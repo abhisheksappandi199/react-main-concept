@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+    class Register extends React.Component{
+        constructor()
+        {
+            super()
+            this.state = {
+                username : '',
+                email : '',
+                password :''
+            }
+        }
+        handleUsernameChange = (e) => {
+            console.log(e.target.value);
+            
+            const username = e.target.value
+            this.setState({ username })
+        }
+        handleSubmit = (e) =>{
+          //console.log(this.state)
+          e.preventDefault()
+          const formDetail = {
+              username : this.state.username
+          }
+          console.log(formDetail);
+          
+        }
+
+        
+        render()
+        {
+            return(
+                <div>
+                    <h2>Register with us </h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>Username : </label>
+                        <input 
+                        type="text"
+                        value={this.state.value}
+                        onChange={this.handleUsernameChange}
+                        />
+                        <br/>
+        
+                        <br/>
+                        <input type="submit" value="Register"/>
+                    </form>
+                </div>
+            )
+        }
+    }
+
+
+      ReactDOM.render(<Register/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

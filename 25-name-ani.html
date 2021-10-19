@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+     const rootHandle = document.getElementById('root')
+
+class TasksList extends React.Component {
+    constructor() {
+        super() 
+        this.state = {
+            tasks: [
+                { id: 1, title: 'db backup', status: false },
+                { id: 2, title: 'client call', status: true },
+                { id: 3, title: 'ux design', status: true },
+                { id: 4, title: 'client call', status: true },
+            ]
+        }
+    }
+
+    handleRemove = (id) => {
+        const confirmRemove = confirm("Are you sure?")
+        if(confirmRemove) {
+            this.setState((prevState) => {
+                return {
+                    tasks: prevState.tasks.filter(task => task.id != id)
+                }
+            })
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <h1> Listing Tasks - { this.state.tasks.length } </h1>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th> # </th> 
+                            <th> title </th> 
+                            <th> status </th> 
+                            <th> action </th> 
+                        </tr> 
+                    </thead>    
+                    <tbody> 
+                        { this.state.tasks.map((task) => {
+                            return (
+                                <tr key={task.id}> 
+                                    <td> { task.id }</td> 
+                                    <td> { task.title }</td> 
+                                    <td> {task.status ? 'completed' : "ongoing" }</td> 
+                                    <td> 
+                                        <button onClick={() => {
+                                            this.handleRemove(task.id)
+                                        }}> 
+                                            remove 
+                                        </button> 
+                                    </td> 
+                                </tr> 
+                            )
+                        })}
+                    </tbody>
+                </table> 
+            </div> 
+        )
+    }
+}
+
+ReactDOM.render(<TasksList />, rootHandle)
+   
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+    /* 
+    http methods
+    POST -create(C)
+    GET - Read(R)
+    PUT - update(U)
+    DELETE - destory (D)
+    */
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET',`https://jsonplaceholder.typicode.com/users`)
+    xhr.send() //ending request to server
+
+    //async call back
+    xhr.onload= () => {
+        //console.log(typeof xhr.responseText);
+        const users = JSON.parse(xhr.responseText)
+        console.log(users);
+        
+    }
+    xhr.onerror = function(){
+        console.log(xhr.responseText);
+        
+    }
+
+    /*
+    JSON -> object - JSON.parse(obj)
+    object -> JSON - JSON.stringify(obj)
+    */
+    </script>
+</body>
+</html>

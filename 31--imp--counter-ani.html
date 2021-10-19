@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+    const rootHandle = document.getElementById('root')
+        class Employees extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    employees: [
+                        { id: 1, name: 'arjun', email: 'arjun@gmail', gender: 'male', department: 'tech' },
+                        { id: 2, name: 'sruthi', email: 'sruthi@gmail', gender: 'female', department: 'tech' },
+                        { id: 3, name: 'deepa', email: 'deepa@gmail', gender: 'female', department: 'hr' },
+                        { id: 4, name: 'jobin', email: 'jobin@gmail', gender: 'male', department: 'facility' },
+                    ]
+                }
+            }
+
+            removeEmployee = (id) => {
+                this.setState((prevState) => {
+                    return {
+                        employees: prevState.employees.filter(emp => emp.id !== id)
+                    }
+                })        
+            }
+
+            addEmployee = (emp) => {
+                this.setState((prevState) => {
+                    return {
+                        employees: prevState.employees.concat(emp)
+                    }
+                })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>Listing Employees - {this.state.employees.length} </h1> 
+                        <EmployeeTable data={this.state.employees} removeEmployee={this.removeEmployee} />
+                        <EmployeeForm addEmployee={this.addEmployee} />
+                    </div> 
+                )
+            }
+        }
+
+        function EmployeeTable(props) {
+            return (
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> name </th>
+                            <th> email </th>
+                            <th> gender </th>
+                            <th> department </th>
+                            <th> action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { props.data.map(function (emp) {
+                            return (
+                                <tr key={emp.id}>
+                                    <td> {emp.id} </td>
+                                    <td> {emp.name} </td>
+                                    <td> {emp.gender} </td>
+                                    <td> {emp.email}</td>
+                                    <td> {emp.department} </td>
+                                    <td> <button onClick={() => {
+                                        props.removeEmployee(emp.id)
+                                    }}> remove </button> </td> 
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            )
+        }
+
+        class EmployeeForm extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    name: '',
+                    email: '',
+                    gender: '',
+                    department: '',
+                }
+            }
+
+            handleNameChange = (e) => {
+                let name = e.target.value
+                this.setState({ name })
+            }
+
+            handleEmailChange = (e) => {
+                let email = e.target.value
+                this.setState({ email })
+            }
+
+            handleGenderChange = (gender) => {
+                this.setState({ gender })
+            }
+
+            handleDeptChange = (e) => {
+                const department = e.target.value 
+                this.setState({ department })
+            }
+            handleBlur = (name,e)=>{
+                e.target.style.background = "white"
+                const xhr = new XMLHttpRequest()
+                xhr.open('GET',`https://api.genderize.io/?name=${name}`)
+                xhr.send()
+
+                xhr.onload = () =>{
+                    const users=JSON.parse(xhr.responseText)
+                    console.log(users);
+                    this.setState({gender : users.gender})
+                    
+                }
+                xhr.onerror = function(){
+                   console.log(xhr.responseText);
+                }
+           }
+           handleFocus = (e) =>{
+               e.target.style.background = 'pink'
+           }
+
+            handleSubmit = (e) => {
+                e.preventDefault()
+                const formData = {
+                    id: Number(new Date()), 
+                    name: this.state.name,
+                    email: this.state.email, 
+                    gender: this.state.gender, 
+                    department: this.state.department
+                }
+                if(formData.name == '') {
+                    alert('name cant be blank')
+                } else {
+                    this.props.addEmployee(formData)
+                    this.setState({
+                        name: '',
+                        email: '',
+                        department: '',
+                        gender: ''
+                    })
+                }
+            }
+            render() {
+
+                return (
+                    <div> 
+                        <h2>Add Employee</h2> 
+                        <form onSubmit={this.handleSubmit}>
+                            <label >Name</label>
+                            <input 
+                                type="text" 
+                                value={this.state.name} 
+                                onChange={this.handleNameChange}
+                                onBlur={(e)=>{this.handleBlur(this.state.name,e)}} 
+                                onFocus={this.handleFocus}
+                            /><br />
+
+                            <label>Email</label>
+                            <input 
+                                type="text" 
+                                value={this.state.email} 
+                                onChange={this.handleEmailChange} 
+                            /> <br />
+
+                            <label> gender </label> 
+                                <input 
+                                    type="radio" 
+                                    name="gender" 
+                                    checked={this.state.gender == 'male' }
+                                    onChange={() => {
+                                        this.handleGenderChange('male')
+                                    }} 
+                                /> male
+
+                                <input 
+                                    type="radio" 
+                                    name="gender"
+                                    checked={this.state.gender == 'female' } 
+                                    onChange={() => {
+                                        this.handleGenderChange('female')
+                                    }} 
+                                /> female
+                            <br/> 
+
+
+                            <label>department</label> 
+                            <select value={this.state.department} onChange={this.handleDeptChange}>
+                                <option value=""> select </option>
+                                <option value="tech"> technology </option>
+                                <option value="hr"> human resource </option>
+                                <option value="facility"> facility management </option>
+                            </select> <br/>
+
+                            <input type="submit" value="Submit"></input>
+                        </form>
+                    </div>
+                    )
+                }   
+            }
+      ReactDOM.render(<Employees />, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+
+        function Student(props) {
+            return (
+                <h1>Student studies @ {props.academy} </h1>
+            )
+        }
+
+        function Trainer(props) {
+            return (
+                <h1>Trainer teaches @ { props.academy } </h1> 
+            )
+        }
+
+        // higher order component - functions
+        // it takes a component as an argument and / or returns a component
+        function withAcademy(WrappedComponent) {
+            // logic, determine the type of user on the system 
+            // const academy = Math.round(Math.random() * 100) % 2 == 0 ? 'DCT' : 'IIT'
+            return () => { // function component
+                return <WrappedComponent academy="dct" />
+            }
+        }
+
+        const EnhancedComponentStudent = withAcademy(Student)
+        const EnhancedComponentTrainer = withAcademy(Trainer)
+
+        const jsx = (
+            <div>
+                <EnhancedComponentStudent />
+                <EnhancedComponentTrainer />
+            </div> 
+        )
+
+        ReactDOM.render(jsx, rootHandle)
+    </script>
+
+
+</body>
+</html>

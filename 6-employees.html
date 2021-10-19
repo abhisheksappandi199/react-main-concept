@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+      const employees = [
+            { id: 1, name: 'arjun', email: 'arjun@gmail', gender: 'male', department: 'tech'},
+            { id: 2, name: 'sruthi', email: 'sruthi@gmail', gender: 'female', department: 'tech' },
+            { id: 3, name: 'deepa', email: 'deepa@gmail', gender: 'female', department: 'hr' },
+            { id: 4, name: 'jobin', email: 'jobin@gmail', gender: 'male', department: 'facility' },
+        ]
+
+        const ele = (
+            <div>
+                <h1>Listing Employees - { employees.length } </h1> 
+                <table border="20">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>name</th>
+                            <th>gender</th>
+                            <th>email</th>
+                            <th>department</th>
+                        </tr>
+                    </thead> 
+                    <tbody> 
+                       {
+                           employees.map(function(ele){
+                              return (<tr>
+                                <td>{ele.id}</td>
+                                <td>{ele.name}</td>
+                                <td>{ele.gender} - ({ele.gender.charAt(0).toUpperCase()})</td>
+                                <td>{ele.email}</td>
+                                <td>{ele.department}</td>
+                                </tr>)
+                           })
+                       }
+                    </tbody>    
+                </table>
+            </div>
+        )
+
+        ReactDOM.render(ele, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

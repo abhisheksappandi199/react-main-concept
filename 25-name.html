@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+    let c=0
+    class Name extends React.Component{
+        constructor()
+        {
+            super()
+            this.state ={
+                name : '',
+                display:true
+            }
+        }
+
+        handleNameChange = (e) =>{
+           const name = e.target.value
+           this.setState({name , display : false })
+        }
+        handleSubmit = (e) =>{
+            e.preventDefault()
+            this.setState((prevstate) =>{
+               return { name: prevstate.name , display : true}
+            })
+        }
+        
+        render()
+        {
+            return(
+                <div>
+                    <h1>enter name</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>first name</label>
+                        <input 
+                        type="text"
+                        value={this.state.name}
+                        onChange={this.handleNameChange}
+                        />
+                        <br/>
+                        <input 
+                        type="submit"
+                        value="submit" 
+                       />
+                    </form>
+                    <h1>{this.state.display && this.state.name}</h1>
+                    
+                </div>
+            )
+        }
+    }
+
+      ReactDOM.render(<Name/>, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>

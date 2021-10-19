@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- https://unpkg.com/react@16.13.1/umd/react.development.js -->
+    <script src="./js/react.development.js"></script>
+    <!-- https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js -->
+    <script src="./js/react-dom.development.js"></script>
+    <!-- https://unpkg.com/browse/babel-standalone@6.26.0/babel.js -->
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        
+      const Players=['d','wd','afef','afaefea','shvvhv','aefea']
+      ///jsx - javascript XMl
+      //embeded expresssion
+      //only render 1 elem at a time with react
+
+      const ele = (
+          <div>
+            <h1>Listing Plyers - {Players.length}</h1>
+            <p>theses r the Players present</p>
+            <ul>
+                {Players.sort().reverse().map(function(e){
+                    return <li>{e}</li>
+                })}
+                </ul>
+            </div>
+      )
+      ReactDOM.render(ele, document.getElementById('root'))
+    </script>
+
+
+</body>
+</html>
